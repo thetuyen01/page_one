@@ -1,9 +1,7 @@
 const endpoints = {
-  category: "/categories",
-  banner: "/banners",
-  videos: "/videos",
-  bannerSticky: "/stickies",
-  search: "/search",
+  login: "/login",
+  register: "/register",
+  refreshToken: "/check-refresh-token",
 };
 
 export default endpoints;

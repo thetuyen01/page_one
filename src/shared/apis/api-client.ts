@@ -5,8 +5,26 @@ import type {
   InternalAxiosRequestConfig,
 } from "axios";
 
+const metaEnv = import.meta.env;
+
+export const getEnv = ({
+  name,
+  defaultValue,
+}: {
+  name: string;
+  defaultValue?: string;
+}): string => {
+  const value = name in metaEnv ? metaEnv[name] : defaultValue;
+  return value || "";
+};
+
+const baseURL = getEnv({
+  name: "VITE_BASE_URL",
+  defaultValue: "http://127.0.0.1:8000/api/v1",
+});
+
 const instance = axios.create({
-  baseURL: "http://206.189.82.216:8000/api/v1", // Thay đổi URL này thành URL cơ bản của API của bạn
+  baseURL: baseURL, // Thay đổi URL này thành URL cơ bản của API của bạn
   headers: {
     "Content-Type": "application/json",
   },
