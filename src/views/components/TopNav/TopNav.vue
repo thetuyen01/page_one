@@ -1,73 +1,296 @@
 <template>
-  <el-menu mode="horizontal" class="top-nav">
-    <el-menu-item index="logo">
-      <img
-        src="https://www.vidnoz.com/img/_common/logo-new.png"
-        alt="Logo"
-        class="logo"
-      />
-    </el-menu-item>
+  <nav
+    class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+  >
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <div class="logo">
+          <img
+            src="https://www.vidnoz.com/img/_common/logo-new.png"
+            alt="Logo"
+            class="h-10"
+          />
+        </div>
 
-    <el-menu-item index="home">
-      <router-link to="/">Home</router-link>
-    </el-menu-item>
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex space-x-6">
+          <li class="relative group" v-for="item in listMenu" :key="item.href">
+            <a
+              href="#"
+              class="hover:text-yellow-300 transition duration-300 font-medium inline-flex items-center"
+            >
+              {{ item.label }}
+              <svg
+                v-if="item.children.length > 0"
+                class="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </a>
+            <!-- Thêm lớp group-hover tại cả thẻ cha và con -->
+            <ul
+              v-if="item.children.length > 0"
+              class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+            >
+              <li v-for="child in item.children" :key="child.href">
+                <a
+                  :href="child.href"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {{ child.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- User and Login Section -->
+        <div class="hidden md:flex items-center space-x-4">
+          <!-- User Avatar (if logged in) -->
+          <div v-if="isLoggedIn" class="relative">
+            <img
+              :src="userAvatar"
+              alt="User Avatar"
+              class="h-8 w-8 rounded-full cursor-pointer object-cover"
+              @click="toggleUserMenu"
+            />
+            <!-- User Dropdown Menu -->
+            <div
+              v-if="userMenuOpen"
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+            >
+              <a
+                href="/profile"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Profile
+              </a>
+              <a
+                href="/settings"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Settings
+              </a>
+              <a
+                href="#"
+                @click="logout"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Logout
+              </a>
+            </div>
+          </div>
+          <!-- Login Button (if not logged in) -->
+          <div v-else class="flex flex-row gap-2">
+            <a
+              href="/login"
+              class="bg-yellow-400 !w-24 text-center text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
+            >
+              Login
+            </a>
+            <a
+              href="/register"
+              class="bg-orange-400 text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
+            >
+              Register
+            </a>
+          </div>
+        </div>
 
-    <el-menu-item index="about">
-      <router-link to="/about">About</router-link>
-    </el-menu-item>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button @click="toggleMobileMenu" class="focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
 
-    <el-menu-item index="contact">
-      <router-link to="/contact">Contact</router-link>
-    </el-menu-item>
-
-    <el-sub-menu index="user" class="user-menu">
-      <template #title>
-        <el-avatar :size="32" :src="userAvatar" />
-        <span class="ms-2">{{ userName }}</span>
-      </template>
-      <el-menu-item index="profile">Profile</el-menu-item>
-      <el-menu-item index="settings">Settings</el-menu-item>
-      <el-menu-item index="logout" @click="logout">Logout</el-menu-item>
-    </el-sub-menu>
-
-    <el-menu-item index="login" v-if="!isLoggedIn">
-      <el-button type="primary" @click="login">Login</el-button>
-    </el-menu-item>
-  </el-menu>
+    <!-- Mobile Menu -->
+    <transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="transform -translate-y-full opacity-0"
+      enter-to-class="transform translate-y-0 opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="transform translate-y-0 opacity-100"
+      leave-to-class="transform -translate-y-full opacity-0"
+    >
+      <ul
+        v-if="mobileMenuOpen"
+        class="md:hidden bg-indigo-700 px-4 pt-2 pb-4 space-y-2 absolute w-full z-10"
+      >
+        <li class="relative group" v-for="item in listMenu" :key="item.href">
+          <a
+            href="#"
+            class="hover:text-yellow-300 transition duration-300 font-medium inline-flex items-center px-2 py-2"
+          >
+            {{ item.label }}
+            <svg
+              v-if="item.children.length > 0"
+              class="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </a>
+          <!-- Thêm lớp group-hover tại cả thẻ cha và con -->
+          <ul
+            v-if="item.children.length > 0"
+            class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+          >
+            <li v-for="child in item.children" :key="child.href">
+              <a
+                :href="child.href"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                {{ child.label }}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li v-if="!isLoggedIn">
+          <a
+            href="/login"
+            @click="closeMobileMenu"
+            class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-yellow-400 text-center"
+          >
+            Login
+          </a>
+        </li>
+        <li v-if="!isLoggedIn">
+          <a
+            href="/register"
+            @click="closeMobileMenu"
+            class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-orange-400 text-center"
+          >
+            Register
+          </a>
+        </li>
+        <li v-else>
+          <div v-if="isLoggedIn" class="relative group ml-2">
+            <img
+              :src="userAvatar"
+              alt="User Avatar"
+              class="h-8 w-8 rounded-full cursor-pointer object-cover"
+            />
+            <!-- User Dropdown Menu -->
+            <div
+              class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden group-hover:visible transition-all duration-300"
+            >
+              <a
+                href="/profile"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Profile
+              </a>
+              <a
+                href="/settings"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Settings
+              </a>
+              <a
+                href="#"
+                @click="logout"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                Logout
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </transition>
+  </nav>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+import { useAuthStore } from "../../../stores/authencation/auth";
 
-const router = useRouter();
+const authStore = useAuthStore();
+const mobileMenuOpen = ref(false);
+const userMenuOpen = ref(false);
+const isLoggedIn = computed(() => authStore.isLoggedIn); // You might want to replace this with actual auth state
+const userAvatar = ref(
+  "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQShFgewbl0SP9RwoBDn6SHU2BOL2cWrajZ0NvWdZOUNA5v5yj7"
+); // Add user avatar URL here when logged in
 
-// Simulated user state (replace with actual auth logic)
-const isLoggedIn = ref(false);
-const userName = ref("John Doe");
-const userAvatar = ref("https://example.com/avatar.jpg");
+const listMenu = [
+  {
+    href: "#home",
+    label: "Features",
+    children: [
+      { href: "#about", label: "AI Avatar" },
+      { href: "#services", label: "AI Video" },
+      { href: "#contact", label: "AI Voice" },
+    ],
+  },
+  {
+    href: "#about",
+    label: "About",
+    children: [
+      { href: "#about", label: "AI Avatar" },
+      { href: "#services", label: "AI Video" },
+      { href: "#contact", label: "AI Voice" },
+    ],
+  },
+  {
+    href: "#services",
+    label: "Services",
+    children: [
+      { href: "#about", label: "AI Avatar" },
+      { href: "#services", label: "AI Video" },
+      { href: "#contact", label: "AI Voice" },
+    ],
+  },
+  { href: "#contact", label: "Contact", children: [] },
+];
 
-const login = () => {
-  // Implement login logic here
-  isLoggedIn.value = true;
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+};
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false;
+};
+
+const toggleUserMenu = () => {
+  userMenuOpen.value = !userMenuOpen.value;
 };
 
 const logout = () => {
   // Implement logout logic here
   isLoggedIn.value = false;
-  router.push("/");
+  closeMobileMenu();
 };
 </script>
-
-<style scoped>
-.top-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-}
-
-.user-menu {
-  margin-left: auto;
-}
-</style>

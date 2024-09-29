@@ -20,7 +20,7 @@ export const getEnv = ({
 
 const baseURL = getEnv({
   name: "VITE_BASE_URL",
-  defaultValue: "http://127.0.0.1:8000/api/v1",
+  defaultValue: "http://127.0.0.1:8000/api/v1/",
 });
 
 const instance = axios.create({
