@@ -250,9 +250,10 @@ const listMenu = [
     href: "#home",
     label: "Features",
     children: [
-      { href: "#about", label: "AI Avatar" },
-      { href: "#services", label: "AI Video" },
-      { href: "#contact", label: "AI Voice" },
+      { href: "/ai-image-to-text", label: "Ai Image to Text" },
+      { href: "/ai-compare-two-pictures", label: "Ai Compare Two Pictures" },
+      { href: "/ai-find-similar-pictures", label: "Ai Find Similar Pictures" },
+      { href: "/ai-voice", label: "Ai Voice" },
     ],
   },
   {
