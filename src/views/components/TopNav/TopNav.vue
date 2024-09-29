@@ -14,9 +14,9 @@
 
         <!-- Desktop Menu -->
         <ul class="hidden md:flex space-x-6">
-          <li class="relative group" v-for="item in listMenu" :key="item.href">
-            <a
-              href="#"
+          <li class="relative group" v-for="item in listMenu" :key="item.to">
+            <router-link
+              :to="item.to"
               class="hover:text-yellow-300 transition duration-300 font-medium inline-flex items-center"
             >
               {{ item.label }}
@@ -35,19 +35,19 @@
                   d="M19 9l-7 7-7-7"
                 ></path>
               </svg>
-            </a>
+            </router-link>
             <!-- Thêm lớp group-hover tại cả thẻ cha và con -->
             <ul
               v-if="item.children.length > 0"
               class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
             >
-              <li v-for="child in item.children" :key="child.href">
-                <a
-                  :href="child.href"
+              <li v-for="child in item.children" :key="child.to">
+                <router-link
+                  :to="child.to"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   {{ child.label }}
-                </a>
+                </router-link>
               </li>
             </ul>
           </li>
@@ -90,18 +90,18 @@
           </div>
           <!-- Login Button (if not logged in) -->
           <div v-else class="flex flex-row gap-2">
-            <a
-              href="/login"
+            <router-link
+              to="/login"
               class="bg-yellow-400 !w-24 text-center text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
               Login
-            </a>
-            <a
-              href="/register"
+            </router-link>
+            <router-link
+              to="/register"
               class="bg-orange-400 text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
               Register
-            </a>
+            </router-link>
           </div>
         </div>
 
@@ -140,9 +140,9 @@
         v-if="mobileMenuOpen"
         class="md:hidden bg-indigo-700 px-4 pt-2 pb-4 space-y-2 absolute w-full z-10"
       >
-        <li class="relative group" v-for="item in listMenu" :key="item.href">
-          <a
-            href="#"
+        <li class="relative group" v-for="item in listMenu" :key="item.to">
+          <router-link
+            :to="item.to"
             class="hover:text-yellow-300 transition duration-300 font-medium inline-flex items-center px-2 py-2"
           >
             {{ item.label }}
@@ -161,39 +161,39 @@
                 d="M19 9l-7 7-7-7"
               ></path>
             </svg>
-          </a>
+          </router-link>
           <!-- Thêm lớp group-hover tại cả thẻ cha và con -->
           <ul
             v-if="item.children.length > 0"
             class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
           >
-            <li v-for="child in item.children" :key="child.href">
-              <a
-                :href="child.href"
+            <li v-for="child in item.children" :key="child.to">
+              <router-link
+                :to="child.to"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
                 {{ child.label }}
-              </a>
+              </router-link>
             </li>
           </ul>
         </li>
         <li v-if="!isLoggedIn">
-          <a
-            href="/login"
+          <router-link
+            to="/login"
             @click="closeMobileMenu"
             class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-yellow-400 text-center"
           >
             Login
-          </a>
+          </router-link>
         </li>
         <li v-if="!isLoggedIn">
-          <a
-            href="/register"
+          <router-link
+            to="/register"
             @click="closeMobileMenu"
             class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-orange-400 text-center"
           >
             Register
-          </a>
+          </router-link>
         </li>
         <li v-else>
           <div v-if="isLoggedIn" class="relative group ml-2">
@@ -236,7 +236,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useAuthStore } from "../../../stores/authencation/auth";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const authStore = useAuthStore();
 const mobileMenuOpen = ref(false);
 const userMenuOpen = ref(false);
@@ -247,34 +249,40 @@ const userAvatar = ref(
 
 const listMenu = [
   {
-    href: "#home",
+    to: "/features",
     label: "Features",
     children: [
-      { href: "/ai-image-to-text", label: "Ai Image to Text" },
-      { href: "/ai-compare-two-pictures", label: "Ai Compare Two Pictures" },
-      { href: "/ai-find-similar-pictures", label: "Ai Find Similar Pictures" },
-      { href: "/ai-voice", label: "Ai Voice" },
+      { to: "/ai-image-to-text", label: "Ai Image to Text" },
+      {
+        to: "/ai-compare-two-pictures",
+        label: "Ai Compare Two Pictures",
+      },
+      {
+        to: "/ai-find-similar-pictures",
+        label: "Ai Find Similar Pictures",
+      },
+      { to: "/ai-voice", label: "Ai Voice" },
     ],
   },
   {
-    href: "#about",
+    to: "/about",
     label: "About",
     children: [
-      { href: "#about", label: "AI Avatar" },
-      { href: "#services", label: "AI Video" },
-      { href: "#contact", label: "AI Voice" },
+      { to: "/ai-avatar", label: "AI Avatar" },
+      { to: "/ai-video", label: "AI Video" },
+      { to: "/ai-voice", label: "AI Voice" },
     ],
   },
   {
-    href: "#services",
+    to: "/services",
     label: "Services",
     children: [
-      { href: "#about", label: "AI Avatar" },
-      { href: "#services", label: "AI Video" },
-      { href: "#contact", label: "AI Voice" },
+      { to: "/services/ai-avatar", label: "AI Avatar" },
+      { to: "/services/ai-video", label: "AI Video" },
+      { to: "/services/ai-voice", label: "AI Voice" },
     ],
   },
-  { href: "#contact", label: "Contact", children: [] },
+  { to: "/contact", label: "Contact", children: [] },
 ];
 
 const toggleMobileMenu = () => {
@@ -291,7 +299,8 @@ const toggleUserMenu = () => {
 
 const logout = () => {
   // Implement logout logic here
-  isLoggedIn.value = false;
+  authStore.logout();
+  router.push({ name: "home" });
   closeMobileMenu();
 };
 </script>

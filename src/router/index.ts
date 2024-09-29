@@ -7,6 +7,7 @@ import AiVoice from "@/views/apps/AiVoice.vue";
 import AiImageToText from "@/views/apps/AiImageToText.vue";
 import AiCompareTwoPictures from "@/views/apps/AiCompareTwoPictures.vue";
 import AiFindSimilarPictures from "@/views/apps/AiFindSimilarPictures.vue";
+import NotFound from "@/views/page/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,11 @@ const router = createRouter({
       path: "/ai-find-similar-pictures",
       name: "ai-find-similar-pictures",
       component: AiFindSimilarPictures,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: NotFound,
     },
   ],
 });
