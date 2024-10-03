@@ -1,98 +1,147 @@
 <template>
   <div
-    class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+    class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
   >
-    <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-md shadow-md">
-      <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h2>
-      </div>
-      <form class="mt-8 space-y-6" @submit.prevent="handleSubmit">
-        <input type="hidden" name="remember" value="true" />
-        <div class="rounded-md shadow-sm -space-y-px">
-          <div>
-            <label for="name" class="sr-only">Full name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Full name"
-              v-model="name"
-            />
-          </div>
-          <div>
-            <label for="email-address" class="sr-only">Email address</label>
-            <input
-              id="email-address"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
-              v-model="email"
-            />
-          </div>
-          <div>
-            <label for="password" class="sr-only">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autocomplete="new-password"
-              required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
-              v-model="password"
-            />
-          </div>
-        </div>
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Create your account
+      </h2>
+    </div>
 
-        <div>
-          <button
-            type="submit"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Sign up
-          </button>
-        </div>
-      </form>
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <form class="space-y-6" @submit.prevent="handleRegister">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">
+              Email address
+            </label>
+            <div class="mt-1">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                v-model="email"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+          </div>
 
-      <div class="mt-6">
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <div class="mt-1">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+                v-model="password"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
           </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500"> Or continue with </span>
+
+          <div v-if="showPhoneRegistration">
+            <label for="phone" class="block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <div class="mt-1">
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                required
+                v-model="phone"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div class="mt-4">
+              <button
+                type="button"
+                @click="handlePhoneVerification"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Send Verification Code
+              </button>
+            </div>
           </div>
-        </div>
+
+          <div>
+            <button
+              type="submit"
+              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Register
+            </button>
+          </div>
+        </form>
 
         <div class="mt-6">
-          <button
-            @click="handleGoogleSignup"
-            class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            <img
-              class="h-5 w-5 mr-2"
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google logo"
-            />
-            Sign up with Google
-          </button>
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button
+              @click="handleGoogleSignIn"
+              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <img
+                class="h-5 w-5 mr-2"
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google logo"
+              />
+              Sign up with Google
+            </button>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="text-sm text-center">
-        <router-link
-          to="/login"
-          class="font-medium text-indigo-600 hover:text-indigo-500"
+  <!-- Verification Code Dialog -->
+  <div
+    v-if="showVerificationDialog"
+    class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center"
+  >
+    <div class="bg-white p-6 rounded-lg shadow-xl">
+      <h3 class="text-lg font-medium text-gray-900 mb-4">
+        Enter Verification Code
+      </h3>
+      <input
+        v-model="verificationCode"
+        type="text"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        placeholder="Enter code"
+      />
+      <div class="mt-4 flex justify-end">
+        <button
+          @click="verifyCode"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Already have an account? Sign in
-        </router-link>
+          Verify
+        </button>
+        <button
+          @click="showVerificationDialog = false"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -100,18 +149,84 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { auth } from "@/firebase.config";
+import { ElNotification } from "element-plus";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendEmailVerification,
+} from "firebase/auth";
+import { useRouter } from "vue-router";
 
-const name = ref("");
 const email = ref("");
 const password = ref("");
+const phone = ref("");
+const showPhoneRegistration = ref(false);
+const verificationId = ref("");
+const verificationCode = ref("");
+const showVerificationDialog = ref(false);
 
-const handleSubmit = () => {
-  // Handle signup logic here
-  console.log("Signup attempt with:", name.value, email.value, password.value);
+const router = useRouter();
+
+const handleRegister = async () => {
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+
+    // Gửi email xác thực
+    await sendEmailVerification(response.user, {
+      url: "https://your-app-url.com/verified", // Địa chỉ URL tùy chỉnh
+    });
+
+    ElNotification({
+      title: "Verification Email Sent",
+      message:
+        "Please check your email and verify your account before logging in.",
+      type: "success",
+    });
+
+    // Chuyển hướng đến trang đăng nhập
+    router.push("/login");
+  } catch (error) {
+    ElNotification({
+      title: "Error",
+      message: "Registration error: ",
+      type: "error",
+    });
+  }
 };
 
-const handleGoogleSignup = () => {
-  // Handle Google signup logic here
-  console.log("Google signup attempt");
+const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const response = await signInWithPopup(auth, provider);
+    if (response.user) {
+      // Gửi email xác thực
+      await sendEmailVerification(response.user, {
+        url: `${import.meta.env.VITE_BASE_URL_HOME}/login`, // Địa chỉ URL tùy chỉnh
+      });
+
+      ElNotification({
+        title: "Verification Email Sent",
+        message:
+          "Please check your email and verify your account before logging in.",
+        type: "success",
+      });
+    }
+  } catch (error) {
+    ElNotification({
+      title: "Error",
+      message: "Error signing in with Google: ",
+      type: "error",
+    });
+  }
 };
+
+const handlePhoneVerification = async () => {};
+
+const verifyCode = async () => {};
 </script>

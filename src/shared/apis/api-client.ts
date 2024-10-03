@@ -88,6 +88,23 @@ const reqPost = async <T>(
   }
 };
 
+const reqAuthPost = async <T>(
+  url: string,
+  data: any,
+  config?: AxiosRequestConfig
+): Promise<AxiosResponse<T>> => {
+  try {
+    const headers = {
+      ...config?.headers,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    };
+    const response = await instance.post<T>(url, data, { ...config, headers });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const reqPut = async <T>(
   url: string,
   data: any,
@@ -125,4 +142,4 @@ const reqDelete = async <T>(
   }
 };
 
-export { reqGet, reqPost, reqPut, reqDelete };
+export { reqGet, reqPost, reqPut, reqDelete, reqAuthPost };

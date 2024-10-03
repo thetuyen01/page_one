@@ -23,14 +23,10 @@ export const useAuthStore = defineStore("auth", {
         this.isLoggedIn = true;
         this.email = (response?.data as IAuthResponse).email;
         this.isPremium = (response?.data as IAuthResponse)?.isPremium;
-        localStorage.setItem(
-          "refreshToken",
-          (response?.data as IAuthResponse).refresh
-        );
-        localStorage.setItem(
-          "accessToken",
-          (response?.data as IAuthResponse).access
-        );
+        this.setToken({
+          accessToken: (response?.data as IAuthResponse).access,
+          refreshToken: (response?.data as IAuthResponse).refresh,
+        });
       }
       return response;
     },
@@ -40,29 +36,55 @@ export const useAuthStore = defineStore("auth", {
     },
     async checkRefreshToken() {
       const refreshToken = localStorage.getItem("refreshToken");
-
       if (!refreshToken) {
-        return (this.isLoggedIn = false);
+        this.isLoggedIn = false;
+        return false;
       }
 
       const response = await authService.checkRefreshToken({
         refresh_token: refreshToken,
       });
-      if (response.status === 200) {
+      if (response.status === 200 && response.data) {
+        const { userInfo } = response.data as IAuthRefreshResponse;
         this.isLoggedIn = true;
-        this.email = (response.data as IAuthRefreshResponse).userInfo.email;
-        this.isPremium = (
-          response.data as IAuthRefreshResponse
-        ).userInfo.isPremium;
+        this.email = userInfo.email;
+        this.isPremium = userInfo.isPremium;
       } else {
         this.isLoggedIn = false;
         this.email = "";
         this.isPremium = false;
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
+        this.removeToken();
       }
 
       return response;
+    },
+
+    setToken(data: { accessToken: string; refreshToken: string }) {
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+    },
+
+    getAccessToken() {
+      return localStorage.getItem("accessToken");
+    },
+
+    removeToken() {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    },
+    async logout() {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        this.isLoggedIn = false;
+        return false;
+      }
+      const response = await authService.logout({
+        refresh_token: refreshToken,
+      });
+      return response;
+    },
+    setLoggedIn(value: boolean) {
+      this.isLoggedIn = value;
     },
   },
 });

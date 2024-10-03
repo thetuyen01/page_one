@@ -297,10 +297,15 @@ const toggleUserMenu = () => {
   userMenuOpen.value = !userMenuOpen.value;
 };
 
-const logout = () => {
+const logout = async () => {
   // Implement logout logic here
-  authStore.logout();
-  router.push({ name: "home" });
-  closeMobileMenu();
+  const res = await authStore.logout();
+  if (res.status === 200) {
+    authStore.setLoggedIn(false);
+    authStore.removeToken();
+    router.push({ name: "home" });
+    closeMobileMenu();
+    console.log("logout success");
+  }
 };
 </script>

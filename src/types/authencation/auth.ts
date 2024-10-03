@@ -1,6 +1,8 @@
 export interface ILogin {
-  email: string;
-  password: string;
+  phone_or_email?: string;
+  password?: string;
+  isGoogle?: boolean;
+  token?: string;
 }
 
 export interface IRegister {

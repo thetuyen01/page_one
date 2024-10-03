@@ -11,6 +11,10 @@ export class AuthService {
     return reqPost(endpoints.register, data);
   }
 
+  logout(data: { refresh_token: string }) {
+    return reqPost(endpoints.logout, data);
+  }
+
   checkRefreshToken(data: { refresh_token: string }) {
     return reqPost(endpoints.refreshToken, data);
   }

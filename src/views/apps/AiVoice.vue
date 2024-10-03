@@ -49,12 +49,16 @@
 
 <script setup>
 import { ref } from "vue";
+import { useAiVoiceStore } from "@/stores/ai-voice/ai-voice";
+import { ElNotification } from "element-plus";
+
+const aiVoiceStore = useAiVoiceStore();
 
 const isRecording = ref(false);
 const selectedFile = ref(null);
 const transcriptionResult = ref("");
 
-const toggleRecording = () => {
+const toggleRecording = async () => {
   isRecording.value = !isRecording.value;
   if (isRecording.value) {
     // Start recording logic here
@@ -68,6 +72,14 @@ const toggleRecording = () => {
       transcriptionResult.value =
         "This is a simulated transcription of your recorded audio.";
     }, 2000);
+  }
+  const res = await aiVoiceStore.transcribeAudio(selectedFile.value);
+  if (res.status === 200) {
+    ElNotification({
+      title: "Success",
+      message: res.data.message,
+      type: "success",
+    });
   }
 };
 
