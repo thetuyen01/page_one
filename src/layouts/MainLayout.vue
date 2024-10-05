@@ -8,9 +8,7 @@
       <RouterView class="h-full" />
     </main>
 
-    <footer class="footer">
-      <Footer />
-    </footer>
+    <Footer />
   </div>
 </template>
 
@@ -27,5 +25,18 @@ body,
 #app {
   height: 100%;
   margin: 0;
+}
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
 }
 </style>

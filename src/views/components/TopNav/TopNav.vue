@@ -5,11 +5,13 @@
     <div class="container mx-auto px-4 py-3">
       <div class="flex justify-between items-center">
         <div class="logo">
-          <img
-            src="https://www.vidnoz.com/img/_common/logo-new.png"
-            alt="Logo"
-            class="h-10"
-          />
+          <router-link to="/">
+            <img
+              src="https://www.vidnoz.com/img/_common/logo-new.png"
+              alt="Logo"
+              class="h-10"
+            />
+          </router-link>
         </div>
 
         <!-- Desktop Menu -->
@@ -92,13 +94,13 @@
           <div v-else class="flex flex-row gap-2">
             <router-link
               to="/login"
-              class="bg-yellow-400 !w-24 text-center text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
+              class="bg-yellow-400 !w-24 text-center text-indigo-600 !py-1 !px-5 !rounded-full text-white font-bold font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
               Login
             </router-link>
             <router-link
               to="/register"
-              class="bg-orange-400 text-indigo-600 px-4 py-2 rounded-md font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
+              class="bg-orange-400 text-indigo-600 !py-1 !px-5 !rounded-full text-white font-bold font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
               Register
             </router-link>

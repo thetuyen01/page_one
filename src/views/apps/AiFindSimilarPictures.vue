@@ -4,26 +4,13 @@
       AI Find Similar Pictures
     </h1>
 
-    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-      <h2 class="text-xl font-semibold mb-4">Upload Images</h2>
-      <div class="flex flex-col items-center">
-        <el-upload
-          class="uploader"
-          action="#"
-          :auto-upload="false"
-          :on-change="handleImagesUpload"
-          :show-file-list="false"
-          multiple
-        >
-          <el-button type="primary" class="fixed-width-button"
-            >Upload Second Image</el-button
-          >
-        </el-upload>
-
-        <div
-          v-if="uploadedImages.length > 0"
-          class="grid grid-cols-3 gap-4 mt-4"
-        >
+    <div class="flex flex-col md:flex-row gap-8 mb-8">
+      <!-- Left side: Uploaded images preview -->
+      <div
+        class="md:w-3/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-black-600"
+      >
+        <h2 class="text-xl font-semibold mb-4">Uploaded Images</h2>
+        <div v-if="uploadedImages.length > 0" class="grid grid-cols-3 gap-4">
           <div
             v-for="(image, index) in uploadedImages"
             :key="index"
@@ -32,13 +19,38 @@
             <img
               :src="image"
               alt="Uploaded image"
-              class="w-full h-32 object-cover rounded"
+              class="w-full h-32 object-cover rounded border-dashed border-2 border-orange-600 shadow-md bg-white"
             />
           </div>
         </div>
+        <p v-else class="text-gray-500">No images uploaded yet.</p>
+      </div>
+
+      <!-- Right side: Upload section -->
+      <div
+        class="md:w-1/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-indigo-600"
+      >
+        <h2 class="text-xl font-semibold mb-4">Upload Images</h2>
+        <el-upload
+          class="uploader"
+          action="#"
+          :auto-upload="false"
+          :on-change="handleImagesUpload"
+          multiple
+          :show-file-list="false"
+        >
+          <el-button
+            type="primary"
+            class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+          >
+            <el-icon class="mr-2"><UploadFilled /></el-icon>
+            Upload Images
+          </el-button>
+        </el-upload>
       </div>
     </div>
 
+    <!-- Results section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4">Similar Images Found</h2>
       <div v-if="similarImages.length > 0" class="grid grid-cols-2 gap-4">
@@ -54,7 +66,7 @@
               :key="imgIndex"
               :src="image"
               alt="Similar image"
-              class="w-full h-24 object-cover rounded"
+              class="w-full h-24 object-cover rounded border-dashed border-2 border-green-600 shadow-md bg-white"
             />
           </div>
         </div>
@@ -68,6 +80,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { UploadFilled } from "@element-plus/icons-vue";
 
 const uploadedImages = ref([]);
 const similarImages = ref([]);
