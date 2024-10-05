@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container mt-28">
+  <div class="home-container !container mx-auto">
     <h1 class="text-2xl font-bold text-center mb-5">
       AI Face Swap Online Free
     </h1>
