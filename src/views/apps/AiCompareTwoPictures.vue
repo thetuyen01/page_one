@@ -1,86 +1,55 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8 text-center">AI Compare Two Pictures</h1>
+    <h1 class="text-3xl font-bold mb-8 text-center">AI Image Comparison</h1>
 
-    <div class="flex flex-col md:flex-row gap-8">
-      <!-- Left side: Image previews -->
-      <div
-        class="md:w-3/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-black-600"
-      >
-        <h2 class="text-xl font-semibold mb-4">Image Previews</h2>
-        <div class="flex items-center justify-center">
-          <div
-            class="w-44 h-44 bg-gray-200 rounded-lg flex items-center justify-center"
-          >
-            <img
-              v-if="firstImagePreview"
-              :src="firstImagePreview"
-              alt="First Image"
-              class="max-w-full max-h-full object-contain"
-            />
-            <span v-else class="text-gray-500">Image 1</span>
-          </div>
-          <span
-            class="animate-pulse text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mx-1"
-          >
-            VS
-          </span>
-          <div
-            class="w-44 h-44 bg-gray-200 rounded-lg flex items-center justify-center"
-          >
-            <img
-              v-if="secondImagePreview"
-              :src="secondImagePreview"
-              alt="Second Image"
-              class="max-w-full max-h-full object-contain"
-            />
-            <span v-else class="text-gray-500">Image 2</span>
-          </div>
+    <div
+      class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 bg-white p-8 rounded-lg shadow-md"
+    >
+      <div class="w-full sm:w-1/3 max-w-xs">
+        <div
+          class="aspect-square bg-gray-100 flex items-center justify-center cursor-pointer overflow-hidden"
+          :class="{
+            'shadow-md border-dashed border-2 border-blue-600':
+              !firstImagePreview,
+          }"
+          @click="triggerFirstImageUpload"
+        >
+          <img
+            v-if="firstImagePreview"
+            :src="firstImagePreview"
+            alt="First Image Preview"
+            class="w-full h-full object-cover shadow-md border-dashed border-2 border-green-600"
+          />
+          <p v-else class="text-gray-500 text-center p-4">
+            <UploadFilled />Click to upload
+          </p>
         </div>
       </div>
 
-      <!-- Right side: Upload buttons -->
       <div
-        class="md:w-1/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-indigo-600"
+        class="animate-pulse text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mx-1"
       >
-        <h2 class="text-xl font-semibold mb-4">Upload Images</h2>
-        <div class="flex flex-col gap-4">
-          <el-upload
-            class="uploader"
-            action="#"
-            :auto-upload="false"
-            :on-change="handleFirstImageUpload"
-            :show-file-list="false"
-          >
-            <el-button
-              type="primary"
-              class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
-            >
-              <el-icon class="mr-2"><UploadFilled /></el-icon>
-              Upload First Image
-            </el-button>
-          </el-upload>
+        Vs
+      </div>
 
-          <el-upload
-            class="uploader"
-            action="#"
-            :auto-upload="false"
-            :on-change="handleSecondImageUpload"
-            :show-file-list="false"
-          >
-            <el-button
-              type="primary"
-              class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
-            >
-              <el-icon class="mr-2"><UploadFilled /></el-icon>
-              Upload Second Image
-            </el-button>
-          </el-upload>
-          <el-button
-            type="success"
-            class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
-            >Compare Images</el-button
-          >
+      <div class="w-full sm:w-1/3 max-w-xs">
+        <div
+          class="aspect-square bg-gray-300 flex items-center justify-center cursor-pointer overflow-hidden"
+          :class="{
+            'shadow-md border-dashed border-2 border-blue-600':
+              firstImagePreview && !secondImagePreview,
+          }"
+          @click="triggerSecondImageUpload"
+        >
+          <img
+            v-if="secondImagePreview"
+            :src="secondImagePreview"
+            alt="Second Image Preview"
+            class="w-full h-full object-cover shadow-md border-dashed border-2 border-green-600"
+          />
+          <p v-else class="text-gray-500 text-center p-4">
+            <UploadFilled /> Click to upload
+          </p>
         </div>
       </div>
     </div>
@@ -96,37 +65,72 @@
       </p>
     </div>
   </div>
+
+  <input
+    type="file"
+    ref="firstImageInput"
+    class="hidden"
+    @change="handleFirstImageUpload"
+    accept="image/*"
+  />
+  <input
+    type="file"
+    ref="secondImageInput"
+    class="hidden"
+    @change="handleSecondImageUpload"
+    accept="image/*"
+  />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { UploadFilled } from "@element-plus/icons-vue";
-const firstImagePreview = ref(null);
-const secondImagePreview = ref(null);
-const comparisonResult = ref("");
 
-const handleFirstImageUpload = (file) => {
+const firstImagePreview = ref<string | null>(null);
+const secondImagePreview = ref<string | null>(null);
+const comparisonResult = ref<string>("");
+const firstImageInput = ref<HTMLInputElement | null>(null);
+const secondImageInput = ref<HTMLInputElement | null>(null);
+
+const triggerFirstImageUpload = () => {
+  if (firstImageInput.value) {
+    firstImageInput.value.click();
+  }
+};
+
+const triggerSecondImageUpload = () => {
+  if (secondImageInput.value) {
+    secondImageInput.value.click();
+  }
+};
+
+const handleFirstImageUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
   if (file) {
     createImagePreview(file, firstImagePreview);
     compareImages();
-    firstImagePreview.value = file;
   }
 };
 
-const handleSecondImageUpload = (file) => {
+const handleSecondImageUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
   if (file) {
     createImagePreview(file, secondImagePreview);
     compareImages();
-    secondImagePreview.value = file;
   }
 };
 
-const createImagePreview = (file, previewRef) => {
+const createImagePreview = (
+  file: File,
+  previewRef: { value: string | null }
+) => {
   const reader = new FileReader();
   reader.onload = (e) => {
-    previewRef.value = e.target.result;
+    previewRef.value = e.target?.result as string;
   };
-  reader.readAsDataURL(file.raw);
+  reader.readAsDataURL(file);
 };
 
 const compareImages = () => {
@@ -139,16 +143,9 @@ const compareImages = () => {
         - Both images are photographs
         - Image sizes are different
         - Color palettes are similar
-        - First image contains more people
-        - Second image has a landscape orientation
-        - Both images appear to be outdoor scenes
+        - No exact match found
       `;
     }, 2000);
   }
 };
 </script>
-<style scoped>
-.fixed-width-button {
-  width: 250px;
-}
-</style>

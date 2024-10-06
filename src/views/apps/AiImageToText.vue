@@ -37,8 +37,11 @@
               <el-button
                 type="primary"
                 class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+                :class="{
+                  '!bg-green-500': imagePreview,
+                }"
+                :icon="imagePreview ? SuccessFilled : UploadFilled"
               >
-                <el-icon class="mr-2"><UploadFilled /></el-icon>
                 Upload Image
               </el-button>
             </el-upload>
@@ -62,7 +65,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { UploadFilled } from "@element-plus/icons-vue";
+import { UploadFilled, SuccessFilled } from "@element-plus/icons-vue";
 const imagePreview = ref(null);
 const extractedText = ref("");
 

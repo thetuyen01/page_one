@@ -44,7 +44,7 @@
             />
           </div>
         </div>
-        <div class="upload-option">
+        <div class="upload-option border-dashed border-2 border-indigo-600">
           <h3 class="mb-2">Option 1: Photo Face Swap</h3>
           <div class="flex flex-row justify-center items-center gap-4">
             <div
@@ -57,7 +57,13 @@
                 :on-change="handleFirstImageChange"
                 :show-file-list="false"
               >
-                <el-button type="primary" class="fixed-width-button"
+                <el-button
+                  type="primary"
+                  class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+                  :class="{
+                    '!bg-green-500': firstImage,
+                  }"
+                  :icon="firstImage ? SuccessFilled : UploadFilled"
                   >Upload First Image</el-button
                 >
               </el-upload>
@@ -68,7 +74,14 @@
                 :on-change="handleSecondImageChange"
                 :show-file-list="false"
               >
-                <el-button type="primary" class="fixed-width-button"
+                <el-button
+                  type="primary"
+                  :disabled="!firstImage"
+                  class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+                  :class="{
+                    '!bg-green-500': secondImage,
+                  }"
+                  :icon="secondImage ? SuccessFilled : UploadFilled"
                   >Upload Second Image</el-button
                 >
               </el-upload>
@@ -83,20 +96,33 @@
                 <el-button
                   type="primary"
                   :disabled="premium"
-                  class="fixed-width-button"
-                  >Upload Three Images<span class="text-red">
-                    ++</span
-                  ></el-button
-                >
+                  class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+                  :class="{
+                    '!bg-green-500': threeImages,
+                  }"
+                  :icon="threeImages ? SuccessFilled : UploadFilled"
+                  >Upload Three Images<span class="text-red"> </span
+                ></el-button>
               </el-upload>
             </div>
           </div>
           <div class="flex justify-center mt-4">
             <el-button
-              type="success"
+              type="primary"
               @click="processImages"
               :disabled="!firstImage || !secondImage"
-              class="fixed-width-button"
+              class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
+              :class="{
+                '!bg-green-500':
+                  (firstImage && secondImage) ||
+                  (firstImage && threeImages && threeImages),
+              }"
+              :icon="
+                (firstImage && secondImage) ||
+                (firstImage && threeImages && threeImages)
+                  ? Promotion
+                  : null
+              "
             >
               Process Images
             </el-button>
@@ -105,7 +131,8 @@
         <div class="upload-option">
           <h3 class="mb-2">Update account to premium</h3>
           <div class="flex flex-row justify-center items-center gap-4">
-            <el-button class="fixed-width-button !bg-yellow-500 text-white"
+            <el-button
+              class="fixed-width-button !bg-yellow-500 text-white !py-3 !px-4 !rounded-full text-white font-bold"
               >Upgrade account to vip</el-button
             >
           </div>
@@ -118,6 +145,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useAuthStore } from "@/stores/authencation/auth";
+import {
+  SuccessFilled,
+  UploadFilled,
+  Promotion,
+} from "@element-plus/icons-vue";
 
 const authStore = useAuthStore();
 const firstImage = ref<File | null>(null);
@@ -205,7 +237,7 @@ const getImagePreviewUrl = (file: { raw?: File } | File | null): string => {
 }
 
 .upload-option {
-  background-color: #cbfec3;
+  background-color: #f8e5d2;
   padding: 20px;
   border-radius: 8px;
 }
