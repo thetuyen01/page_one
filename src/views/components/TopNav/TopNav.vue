@@ -283,13 +283,9 @@ const listMenu = [
     ],
   },
   {
-    to: "/about",
-    label: "About",
-    children: [
-      { to: "/ai-avatar", label: "AI Avatar" },
-      { to: "/ai-video", label: "AI Video" },
-      { to: "/ai-voice", label: "AI Voice" },
-    ],
+    to: "/pricing",
+    label: "Pricing",
+    children: [],
   },
   {
     to: "/services",
