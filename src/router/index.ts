@@ -10,6 +10,7 @@ import AiFindSimilarPictures from "@/views/apps/AiFindSimilarPictures.vue";
 import NotFound from "@/views/page/NotFound.vue";
 import PricingBase from "@/views/apps/pricing/PricingBase.vue";
 import Contact from "@/views/page/Contact.vue";
+import Profile from "@/views/page/Profile.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       path: "/contact",
       name: "contact",
       component: Contact,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile,
     },
     {
       path: "/:pathMatch(.*)*",
