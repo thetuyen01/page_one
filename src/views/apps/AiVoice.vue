@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useAiVoiceStore } from "@/stores/ai-voice/ai-voice";
 import { ElNotification } from "element-plus";
 import { Microphone, UploadFilled } from "@element-plus/icons-vue";
@@ -118,4 +118,8 @@ const uploadFile = () => {
     }, 2000);
   }
 };
+
+onMounted(() => {
+  document.title = "AI Voice";
+});
 </script>

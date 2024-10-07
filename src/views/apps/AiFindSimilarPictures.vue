@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { UploadFilled } from "@element-plus/icons-vue";
 
 const uploadedImages = ref([]);
@@ -112,4 +112,7 @@ const findSimilarImages = () => {
     [uploadedImages.value[1], uploadedImages.value[3], uploadedImages.value[4]],
   ];
 };
+onMounted(() => {
+  document.title = "AI Find Similar Pictures";
+});
 </script>

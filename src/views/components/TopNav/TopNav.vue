@@ -6,11 +6,7 @@
       <div class="flex justify-between items-center">
         <div class="logo">
           <router-link to="/">
-            <img
-              src="https://www.vidnoz.com/img/_common/logo-new.png"
-              alt="Logo"
-              class="h-10"
-            />
+            <img src="/logo.png" alt="Logo" class="h-14 w-20 rounded-lg" />
           </router-link>
         </div>
 

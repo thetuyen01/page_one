@@ -79,12 +79,15 @@
         </div>
       </div>
       <div class="mt-8 border-t border-gray-700 pt-8 text-sm text-center">
-        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} Your Company Name. All rights reserved.</p>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
+const currentYear = ref(new Date().getFullYear());
 // You can add any necessary imports or logic here
 </script>

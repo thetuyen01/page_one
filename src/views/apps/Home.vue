@@ -143,7 +143,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/authencation/auth";
 import {
   SuccessFilled,
@@ -196,6 +196,9 @@ const getImagePreviewUrl = (file: { raw?: File } | File | null): string => {
   }
   return URL.createObjectURL(actualFile);
 };
+onMounted(() => {
+  document.title = "Micro AI";
+});
 </script>
 
 <style scoped>

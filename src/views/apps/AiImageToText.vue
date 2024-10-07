@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { UploadFilled, SuccessFilled } from "@element-plus/icons-vue";
 const imagePreview = ref(null);
 const extractedText = ref("");
@@ -86,4 +86,7 @@ const handleImageUpload = (file) => {
     }, 2000);
   }
 };
+onMounted(() => {
+  document.title = "AI Image to Text";
+});
 </script>
