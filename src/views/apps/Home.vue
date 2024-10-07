@@ -1,7 +1,7 @@
 <template>
   <div class="home-container !container mx-auto">
     <h1 class="text-2xl font-bold text-center mb-5">
-      AI Face Swap Online Free
+      {{ $t("AIFaceSwapOnlineFree") }}
     </h1>
     <div class="content">
       <div class="image-display" v-loading="isLoading">
@@ -15,7 +15,7 @@
           class="result-image"
         />
         <div v-else class="placeholder">
-          Your processed image will appear here
+          {{ $t("YourProcessedImageWillAppearHere") }}
         </div>
       </div>
       <div class="upload-section">
@@ -27,7 +27,7 @@
               class="object-cover sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48"
             />
           </div>
-          <span v-if="secondImage" class="my-auto mx-2">VS</span>
+          <span v-if="secondImage" class="my-auto mx-2">{{ $t("vs") }}</span>
           <div v-if="secondImage" class="image-preview">
             <img
               :src="getImagePreviewUrl(secondImage)"
@@ -35,7 +35,7 @@
               class="object-cover sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48"
             />
           </div>
-          <span v-if="threeImages" class="my-auto mx-2">VS</span>
+          <span v-if="threeImages" class="my-auto mx-2">{{ $t("vs") }}</span>
           <div v-if="threeImages" class="image-preview">
             <img
               :src="getImagePreviewUrl(threeImages)"
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="upload-option border-dashed border-2 border-indigo-600">
-          <h3 class="mb-2">Option 1: Photo Face Swap</h3>
+          <h3 class="mb-2">{{ $t("Option1PhotoFaceSwap") }}</h3>
           <div class="flex flex-row justify-center items-center gap-4">
             <div
               class="flex flex-col sm:flex-row justify-center items-center gap-4"
@@ -64,7 +64,7 @@
                     '!bg-green-500': firstImage,
                   }"
                   :icon="firstImage ? SuccessFilled : UploadFilled"
-                  >Upload First Image</el-button
+                  >{{ $t("UploadFirstImage") }}</el-button
                 >
               </el-upload>
               <el-upload
@@ -82,7 +82,7 @@
                     '!bg-green-500': secondImage,
                   }"
                   :icon="secondImage ? SuccessFilled : UploadFilled"
-                  >Upload Second Image</el-button
+                  >{{ $t("UploadSecondImage") }}</el-button
                 >
               </el-upload>
               <el-upload
@@ -101,7 +101,7 @@
                     '!bg-green-500': threeImages,
                   }"
                   :icon="threeImages ? SuccessFilled : UploadFilled"
-                  >Upload Three Images<span class="text-red"> </span
+                  >{{ $t("UploadThreeImages") }}<span class="text-red"> </span
                 ></el-button>
               </el-upload>
             </div>
@@ -124,16 +124,16 @@
                   : null
               "
             >
-              Process Images
+              {{ $t("ProcessImages") }}
             </el-button>
           </div>
         </div>
         <div class="upload-option">
-          <h3 class="mb-2">Update account to premium</h3>
+          <h3 class="mb-2">{{ $t("UpdateAccountToPremium") }}</h3>
           <div class="flex flex-row justify-center items-center gap-4">
             <el-button
               class="fixed-width-button !bg-yellow-500 text-white !py-3 !px-4 !rounded-full text-white font-bold"
-              >Upgrade account to vip</el-button
+              >{{ $t("UpgradeAccountToVip") }}</el-button
             >
           </div>
         </div>

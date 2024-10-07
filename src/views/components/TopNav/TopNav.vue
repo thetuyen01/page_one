@@ -101,6 +101,28 @@
               Register
             </router-link>
           </div>
+          <div class="flex items-center space-x-2">
+            <el-select
+              v-model="selectedLanguage"
+              @change="switchLanguage"
+              placeholder="Select"
+              :suffix-icon="WorkdIcon"
+              style="width: 140px"
+              class="rounded-lg"
+            >
+              <el-option
+                v-for="item in listLanguage"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+                <span class="flex flex-row"
+                  ><component :is="item.icon" class="mt-2 mr-1" />
+                  {{ item.label }}</span
+                >
+              </el-option>
+            </el-select>
+          </div>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -242,6 +264,28 @@
             </div>
           </div>
         </li>
+        <li>
+          <el-select
+            v-model="selectedLanguage"
+            @change="switchLanguage"
+            placeholder="Select"
+            :suffix-icon="WorkdIcon"
+            style="width: 140px"
+            class="rounded-lg"
+          >
+            <el-option
+              v-for="item in listLanguage"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+              <span class="flex flex-row"
+                ><component :is="item.icon" class="mt-2 mr-1" />
+                {{ item.label }}</span
+              >
+            </el-option>
+          </el-select>
+        </li>
       </ul>
     </transition>
   </nav>
@@ -251,6 +295,13 @@
 import { ref, computed } from "vue";
 import { useAuthStore } from "../../../stores/authencation/auth";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n"; // Import useI18n
+import WorkdIcon from "@/assets/icon/WorkdIcon.vue";
+import VnFlag from "@/assets/icon/VnFlag.vue";
+import EnFlag from "@/assets/icon/EnFlag.vue";
+
+// Setup the i18n instance
+const { locale } = useI18n(); // Destructure locale from useI18n
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -260,7 +311,23 @@ const isLoggedIn = computed(() => authStore.isLoggedIn); // You might want to re
 const userAvatar = ref(
   "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQShFgewbl0SP9RwoBDn6SHU2BOL2cWrajZ0NvWdZOUNA5v5yj7"
 ); // Add user avatar URL here when logged in
+const selectedLanguage = ref("en");
+const listLanguage = [
+  {
+    value: "vi",
+    label: "Vietnamese",
+    icon: VnFlag,
+  },
+  {
+    value: "en",
+    label: "English",
+    icon: EnFlag,
+  },
+];
 
+const switchLanguage = () => {
+  locale.value = selectedLanguage.value;
+};
 const listMenu = [
   {
     to: "/features",
@@ -319,3 +386,8 @@ const logout = async () => {
   }
 };
 </script>
+<style scoped lang="scss">
+:deep(.el-select__wrapper) {
+  background-color: antiquewhite !important;
+}
+</style>
