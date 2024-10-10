@@ -1,9 +1,9 @@
 <template>
   <div class="container mx-auto py-8">
-    <h1 class="text-4xl font-bold mb-4 text-center">Contact Us</h1>
+    <h1 class="text-4xl font-bold mb-4 text-center">{{ $t("ContactUs") }}</h1>
 
     <p class="text-lg mb-6 text-center">
-      Feel free to reach out to us for any inquiries or questions.
+      {{ $t("FeelFreeToReachOutToUsForAnyInquiriesOrQuestions") }}
     </p>
 
     <form
@@ -11,8 +11,10 @@
       class="bg-white p-6 rounded shadow-md max-w-lg mx-auto"
     >
       <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-700 mb-2"
-          >Your Name</label
+        <label
+          for="name"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >{{ $t("YourName") }}</label
         >
         <input
           v-model="formData.name"
@@ -24,8 +26,10 @@
       </div>
 
       <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2"
-          >Email Address</label
+        <label
+          for="email"
+          class="block text-sm font-medium text-gray-700 mb-2"
+          >{{ $t("EmailAddress") }}</label
         >
         <input
           v-model="formData.email"
@@ -40,7 +44,7 @@
         <label
           for="message"
           class="block text-sm font-medium text-gray-700 mb-2"
-          >Your Message</label
+          >{{ $t("YourMessage") }}</label
         >
         <textarea
           v-model="formData.message"
@@ -55,7 +59,7 @@
         type="primary"
         class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
       >
-        Send Message
+        {{ $t("SendMessage") }}
       </button>
     </form>
   </div>

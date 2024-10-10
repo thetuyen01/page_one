@@ -1,6 +1,8 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8 text-center">AI Voice Transcription</h1>
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      {{ $t("AIVoiceTranscription") }}
+    </h1>
 
     <div
       class="flex flex-col bg-white p-10 md:flex-row gap-8 rounded-lg shadow-md"
@@ -9,7 +11,7 @@
       <div
         class="flex-1 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-indigo-600"
       >
-        <h2 class="text-xl font-semibold mb-4">Record Audio</h2>
+        <h2 class="text-xl font-semibold mb-4">{{ $t("RecordAudio") }}</h2>
 
         <div class="flex flex-col items-center">
           <button
@@ -17,9 +19,9 @@
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full mb-4"
           >
             <el-icon><Microphone /></el-icon>
-            {{ isRecording ? "Stop Recording" : "Start Recording" }}
+            {{ isRecording ? $t("StopRecording") : $t("StartRecording") }}
           </button>
-          <p v-if="isRecording" class="text-red-500">Recording...</p>
+          <p v-if="isRecording" class="text-red-500">{{ $t("Recording") }}</p>
         </div>
       </div>
       <h1 class="flex items-center justify-center">
@@ -27,14 +29,14 @@
           type="button"
           class="h-10 w-10 rounded-full text-xl text-center bg-yellow-400"
         >
-          Or
+          {{ $t("Or") }}
         </button>
       </h1>
       <!-- Upload Audio File Section -->
       <div
         class="flex-1 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-indigo-600"
       >
-        <h2 class="text-xl font-semibold mb-4">Upload Audio File</h2>
+        <h2 class="text-xl font-semibold mb-4">{{ $t("UploadAudioFile") }}</h2>
         <div class="flex flex-col items-center">
           <el-upload
             class="uploader py-2 px-4 rounded-full"
@@ -48,7 +50,7 @@
               class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
             >
               <el-icon class="mr-2"><UploadFilled /></el-icon>
-              Upload an Audio
+              {{ $t("UploadAnAudio") }}
             </el-button>
           </el-upload>
         </div>
@@ -57,11 +59,15 @@
 
     <!-- Transcription Result Section -->
     <div class="mt-8 bg-white p-10 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Transcription Result</h2>
+      <h2 class="text-xl font-semibold mb-4">
+        {{ $t("TranscriptionResult") }}
+      </h2>
       <div v-if="transcriptionResult" class="bg-gray-100 p-4 rounded">
         <p>{{ transcriptionResult }}</p>
       </div>
-      <p v-else class="text-gray-500">No transcription available yet.</p>
+      <p v-else class="text-gray-500">
+        {{ $t("NoTranscriptionAvailableYet") }}
+      </p>
     </div>
   </div>
 </template>

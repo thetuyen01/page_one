@@ -1,6 +1,8 @@
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8 text-center">AI Image Comparison</h1>
+    <h1 class="text-3xl font-bold mb-8 text-center">
+      {{ $t("AiImageComparison") }}
+    </h1>
 
     <div
       class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 bg-white p-8 rounded-lg shadow-md"
@@ -21,7 +23,7 @@
             class="w-full h-full object-cover shadow-md border-dashed border-2 border-green-600"
           />
           <p v-else class="text-gray-500 text-center p-4">
-            <UploadFilled />Click to upload
+            <UploadFilled /> {{ $t("ClickToUpload") }}
           </p>
         </div>
       </div>
@@ -29,7 +31,7 @@
       <div
         class="animate-pulse text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mx-1"
       >
-        Vs
+        {{ $t("Vs") }}
       </div>
 
       <div class="w-full sm:w-1/3 max-w-xs">
@@ -48,7 +50,7 @@
             class="w-full h-full object-cover shadow-md border-dashed border-2 border-green-600"
           />
           <p v-else class="text-gray-500 text-center p-4">
-            <UploadFilled /> Click to upload
+            <UploadFilled /> {{ $t("ClickToUpload") }}
           </p>
         </div>
       </div>
@@ -56,12 +58,12 @@
 
     <!-- Comparison Result Section -->
     <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Comparison Result</h2>
+      <h2 class="text-xl font-semibold mb-4">{{ $t("ComparisonResult") }}</h2>
       <div v-if="comparisonResult" class="bg-gray-100 p-4 rounded">
         <p>{{ comparisonResult }}</p>
       </div>
       <p v-else class="text-gray-500">
-        No comparison result yet. Please upload both images.
+        {{ $t("NoTextExtractedYetPleaseUploadAnImage") }}
       </p>
     </div>
   </div>

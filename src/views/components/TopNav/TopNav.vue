@@ -39,11 +39,18 @@
               v-if="item.children.length > 0"
               class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
             >
-              <li v-for="child in item.children" :key="child.to">
+              <li
+                v-for="child in item.children"
+                :key="child.to"
+                class="px-3 py-1 !w-auto"
+              >
                 <router-link
                   :to="child.to"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 !w-auto"
                 >
+                  <el-icon>
+                    <Pointer class="text-red-600" />
+                  </el-icon>
                   {{ child.label }}
                 </router-link>
               </li>
@@ -90,15 +97,15 @@
           <div v-else class="flex flex-row gap-2">
             <router-link
               to="/login"
-              class="bg-yellow-400 !w-24 text-center text-indigo-600 !py-1 !px-5 !rounded-full text-white font-bold font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
+              class="bg-yellow-400 text-center text-indigo-600 !py-1 !px-5 !rounded-full text-white font-bold font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
-              Login
+              {{ $t("Login") }}
             </router-link>
             <router-link
               to="/register"
               class="bg-orange-400 text-indigo-600 !py-1 !px-5 !rounded-full text-white font-bold font-medium hover:bg-indigo-600 hover:text-orange-400 transition duration-300"
             >
-              Register
+              {{ $t("Register") }}
             </router-link>
           </div>
           <div class="flex items-center space-x-2">
@@ -219,7 +226,7 @@
             @click="closeMobileMenu"
             class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-yellow-400 text-center"
           >
-            Login
+            {{ $t("Login") }}
           </router-link>
         </li>
         <li v-if="!isLoggedIn">
@@ -228,7 +235,7 @@
             @click="closeMobileMenu"
             class="block hover:bg-indigo-600 px-2 py-1 rounded transition duration-300 text-white bg-orange-400 text-center"
           >
-            Register
+            {{ $t("Register") }}
           </router-link>
         </li>
         <li v-else>
@@ -299,6 +306,7 @@ import { useI18n } from "vue-i18n"; // Import useI18n
 import WorkdIcon from "@/assets/icon/WorkdIcon.vue";
 import VnFlag from "@/assets/icon/VnFlag.vue";
 import EnFlag from "@/assets/icon/EnFlag.vue";
+import { Pointer } from "@element-plus/icons-vue";
 
 // Setup the i18n instance
 const { locale } = useI18n(); // Destructure locale from useI18n

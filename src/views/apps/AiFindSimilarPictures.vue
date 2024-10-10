@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8 text-center">
-      AI Find Similar Pictures
+      {{ $t("AiFindSimilarPictures") }}
     </h1>
 
     <div class="flex flex-col md:flex-row gap-8 mb-8">
@@ -9,7 +9,7 @@
       <div
         class="md:w-3/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-black-600"
       >
-        <h2 class="text-xl font-semibold mb-4">Uploaded Images</h2>
+        <h2 class="text-xl font-semibold mb-4">{{ $t("UploadedImages") }}</h2>
         <div v-if="uploadedImages.length > 0" class="grid grid-cols-3 gap-4">
           <div
             v-for="(image, index) in uploadedImages"
@@ -23,14 +23,14 @@
             />
           </div>
         </div>
-        <p v-else class="text-gray-500">No images uploaded yet.</p>
+        <p v-else class="text-gray-500">{{ $t("NoImagesUploadedYet") }}</p>
       </div>
 
       <!-- Right side: Upload section -->
       <div
         class="md:w-1/4 bg-white p-6 rounded-lg shadow-md border-dashed border-2 border-indigo-600"
       >
-        <h2 class="text-xl font-semibold mb-4">Upload Images</h2>
+        <h2 class="text-xl font-semibold mb-4">{{ $t("UploadImages") }}</h2>
         <el-upload
           class="uploader"
           action="#"
@@ -44,7 +44,7 @@
             class="fixed-width-button !py-3 !px-4 !rounded-full text-white font-bold"
           >
             <el-icon class="mr-2"><UploadFilled /></el-icon>
-            Upload Images
+            {{ $t("UploadedImage") }}
           </el-button>
         </el-upload>
       </div>
@@ -52,14 +52,16 @@
 
     <!-- Results section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Similar Images Found</h2>
+      <h2 class="text-xl font-semibold mb-4">{{ $t("SimilarImagesFound") }}</h2>
       <div v-if="similarImages.length > 0" class="grid grid-cols-2 gap-4">
         <div
           v-for="(group, index) in similarImages"
           :key="index"
           class="border p-4 rounded"
         >
-          <h3 class="font-semibold mb-2">Similar Group {{ index + 1 }}</h3>
+          <h3 class="font-semibold mb-2">
+            {{ $t("SimilarGroup") }} {{ index + 1 }}
+          </h3>
           <div class="grid grid-cols-2 gap-2">
             <img
               v-for="(image, imgIndex) in group"
@@ -72,7 +74,7 @@
         </div>
       </div>
       <p v-else class="text-gray-500">
-        No similar images found yet. Please upload some images.
+        {{ $t("NoTextExtractedYetPleaseUploadAnImage") }}
       </p>
     </div>
   </div>

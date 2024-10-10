@@ -4,7 +4,7 @@
   >
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Create your account
+        {{ $t("CreateYourAccount") }}
       </h2>
     </div>
 
@@ -13,7 +13,7 @@
         <form class="space-y-6" @submit.prevent="handleRegister">
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
-              Email address
+              {{ $t("EmailAddress") }}
             </label>
             <div class="mt-1">
               <input
@@ -33,7 +33,7 @@
               for="password"
               class="block text-sm font-medium text-gray-700"
             >
-              Password
+              {{ $t("Password") }}
             </label>
             <div class="mt-1">
               <input
@@ -50,7 +50,7 @@
 
           <div v-if="showPhoneRegistration">
             <label for="phone" class="block text-sm font-medium text-gray-700">
-              Phone Number
+              {{ $t("PhoneNumber") }}
             </label>
             <div class="mt-1">
               <input
@@ -69,7 +69,7 @@
                 @click="handlePhoneVerification"
                 class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Send Verification Code
+                {{ $t("SendVerificationCode") }}
               </button>
             </div>
           </div>
@@ -79,7 +79,7 @@
               type="submit"
               class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Register
+              {{ $t("Register") }}
             </button>
           </div>
         </form>
@@ -91,7 +91,7 @@
             </div>
             <div class="relative flex justify-center text-sm">
               <span class="px-2 bg-white text-gray-500">
-                Or continue with
+                {{ $t("OrContinueWith") }}
               </span>
             </div>
           </div>
@@ -106,7 +106,7 @@
                 src="https://www.svgrepo.com/show/475656/google-color.svg"
                 alt="Google logo"
               />
-              Sign up with Google
+              {{ $t("SignUpWithGoogle") }}
             </button>
           </div>
         </div>

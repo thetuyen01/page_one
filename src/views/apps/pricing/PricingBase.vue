@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-4xl font-bold text-center mb-12">
-      Choose Your Perfect Plan
+      {{ $t("ChooseYourPerfectPlan") }}
     </h1>
     <p class="text-xl text-center mb-8">
-      Unlock the power of AI with our flexible pricing options
+      {{ $t("UnlockThePowerOfAiWithOurFlexiblePricingOptions") }}
     </p>
 
     <div class="flex flex-wrap justify-center gap-8">
@@ -17,7 +17,7 @@
         </h2>
         <p class="text-4xl font-bold text-center mb-6">
           ${{ basePackages[0]?.price
-          }}<span class="text-lg font-normal">/month</span>
+          }}<span class="text-lg font-normal">/{{ $t("Month") }}</span>
         </p>
         <ul class="mb-8">
           <li
@@ -45,7 +45,7 @@
         <button
           class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300"
         >
-          Choose Base Plan
+          {{ $t("ChooseBasePlan") }}
         </button>
       </div>
 
@@ -58,7 +58,7 @@
         </h2>
         <p class="text-4xl font-bold text-center mb-6">
           ${{ vipPackages[0]?.price
-          }}<span class="text-lg font-normal">/month</span>
+          }}<span class="text-lg font-normal">/{{ $t("Month") }}</span>
         </p>
         <ul class="mb-8">
           <li
@@ -86,7 +86,7 @@
         <button
           class="w-full bg-purple-500 text-white py-2 px-4 rounded-lg hover:bg-purple-600 transition-colors duration-300"
         >
-          Choose VIP Plan
+          {{ $t("ChooseVipPlan") }}
         </button>
       </div>
 
@@ -99,7 +99,7 @@
         </h2>
         <p class="text-4xl font-bold text-center mb-6">
           ${{ vipProPackages[0]?.price
-          }}<span class="text-lg font-normal">/month</span>
+          }}<span class="text-lg font-normal">/{{ $t("Month") }}</span>
         </p>
         <ul class="mb-8">
           <li
@@ -127,13 +127,17 @@
         <button
           class="w-full bg-gold-500 text-white py-2 px-4 rounded-lg hover:bg-gold-600 transition-colors duration-300"
         >
-          Choose Pro VIP Plan
+          {{ $t("ChooseProVipPlan") }}
         </button>
       </div>
     </div>
     <div class="mt-16">
-      <h2 class="text-2xl font-semibold mb-4">Secure Payment Options</h2>
-      <p class="mb-6">We accept all major credit cards for your convenience</p>
+      <h2 class="text-2xl font-semibold mb-4">
+        {{ $t("SecurePaymentOptions") }}
+      </h2>
+      <p class="mb-6">
+        {{ $t("WeAcceptAllMajorCreditCardsForYourConvenience") }}
+      </p>
       <div class="flex justify-center items-center space-x-4">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Visa_2021.svg/1280px-Visa_2021.svg.png"
@@ -167,7 +171,9 @@
     </div>
 
     <div class="mt-16">
-      <h2 class="text-2xl font-semibold mb-6">Frequently Asked Questions</h2>
+      <h2 class="text-2xl font-semibold mb-6">
+        {{ $t("FrequentlyAskedQuestions") }}
+      </h2>
       <el-collapse>
         <el-collapse-item :name="faq?.id + 1" v-for="faq in faq" :key="faq?.id">
           <template #title>
